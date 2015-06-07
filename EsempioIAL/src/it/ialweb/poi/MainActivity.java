@@ -2,8 +2,14 @@ package it.ialweb.poi;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -11,6 +17,28 @@ public class MainActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		RecyclerView recycler = (RecyclerView) findViewById(R.id.recycler);
+		recycler.setLayoutManager(new LinearLayoutManager(this));
+		recycler.setAdapter(new RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+			@Override
+			public int getItemCount() {
+				return 20;
+			}
+
+			@Override
+			public void onBindViewHolder(ViewHolder holder, int pos) {
+				TextView textView = (TextView) holder.itemView;
+				textView.setText("Item " + pos);
+			}
+
+			@Override
+			public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
+				View v = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
+				return new ViewHolder(v) {
+				};
+			}
+		});
 	}
 
 	@Override
