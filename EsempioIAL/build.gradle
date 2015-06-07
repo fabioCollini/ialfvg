@@ -1,0 +1,58 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.github.ksoichiro:gradle-eclipse-aar-plugin:0.1.1'
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'com.android.application'
+
+apply plugin: 'com.github.ksoichiro.eclipse.aar'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "it.ialweb.poi"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:22.2.0'
+    compile 'com.android.support:recyclerview-v7:22.2.0'
+    compile 'com.loopj.android:android-async-http:1.4.7'
+}
+
+eclipseAar {
+    androidTarget = 'android-22'
+    aarDependenciesDir = 'aarDependencies'
+}
