@@ -4,5 +4,8 @@
     <string name="app_name">EsempioIAL</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="loading">Loading...</string>
+    <string name="error_loading_data">Error loading data</string>
+    <string name="retry">Retry</string>
 
 </resources>
