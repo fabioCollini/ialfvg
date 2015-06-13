@@ -1,14 +1,14 @@
 package it.ialweb.poi;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import com.google.gson.annotations.SerializedName;
 
 public class StationList {
 	@SerializedName("results")
-	private List<Station> list;
+	private ArrayList<Station> list;
 
-	public List<Station> getList() {
+	public ArrayList<Station> getList() {
 		return list;
 	}
 }
