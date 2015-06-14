@@ -1,5 +1,5 @@
 <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_fragment"
+    android:id="@+id/detail_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    class="it.ialweb.poi.MainFragment" />
+    class="it.ialweb.poi.DetailFragment" />

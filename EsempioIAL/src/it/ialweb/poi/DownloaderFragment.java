@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.apache.http.Header;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 
 import com.google.gson.Gson;
@@ -24,8 +23,7 @@ public class DownloaderFragment extends Fragment {
 		setRetainInstance(true);
 	}
 
-	public static DownloaderFragment getOrCreateFragment(FragmentActivity activity, String tag) {
-		FragmentManager fragmentManager = activity.getSupportFragmentManager();
+	public static DownloaderFragment getOrCreateFragment(FragmentManager fragmentManager, String tag) {
 		DownloaderFragment fragment = (DownloaderFragment) fragmentManager.findFragmentByTag(tag);
 		if (fragment == null) {
 			fragment = new DownloaderFragment();
@@ -40,7 +38,7 @@ public class DownloaderFragment extends Fragment {
 		void onError(int statusCode);
 	}
 
-	public void attachOrLoadData(final DownloadListener listener) {
+	public void attachOrLoadData(DownloadListener listener) {
 		this.listener = listener;
 		client = new AsyncHttpClient();
 		client.addHeader("X-Parse-Application-Id", "uFkr2W3mPXkLrtAHU0ufa4cm3WgZ0RbTUInOnnL3");
@@ -56,13 +54,13 @@ public class DownloaderFragment extends Fragment {
 			@Override
 			public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 				StationList responseList = new Gson().fromJson(new String(response), StationList.class);
-				listener.onLoad(responseList.getList());
+				DownloaderFragment.this.listener.onLoad(responseList.getList());
 				isRunning = false;
 			}
 
 			@Override
 			public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-				listener.onError(statusCode);
+				DownloaderFragment.this.listener.onError(statusCode);
 				isRunning = false;
 			}
 

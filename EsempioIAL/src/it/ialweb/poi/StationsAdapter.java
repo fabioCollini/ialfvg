@@ -4,17 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-public final class StationsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public final class StationsAdapter extends RecyclerView.Adapter<StationViewHolder> {
 
 	private RequestManager glide;
 
@@ -22,9 +18,12 @@ public final class StationsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 	private Activity activity;
 
-	public StationsAdapter(Activity activity, ArrayList<Station> list) {
+	private OpenDetailListener openDetailListener;
+
+	public StationsAdapter(Activity activity, ArrayList<Station> list, OpenDetailListener openDetailListener) {
 		this.activity = activity;
 		this.list = list;
+		this.openDetailListener = openDetailListener;
 		glide = Glide.with(activity);
 	}
 
@@ -34,19 +33,14 @@ public final class StationsAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 	}
 
 	@Override
-	public void onBindViewHolder(ViewHolder holder, int pos) {
-		TextView textView = (TextView) holder.itemView.findViewById(R.id.text);
-		ImageView image = (ImageView) holder.itemView.findViewById(R.id.map);
-		Station station = list.get(pos);
-		textView.setText(station.getName());
-		glide.load(station.getImageUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
+	public void onBindViewHolder(StationViewHolder holder, int pos) {
+		holder.populate(list.get(pos));
 	}
 
 	@Override
-	public ViewHolder onCreateViewHolder(ViewGroup parent, int arg1) {
+	public StationViewHolder onCreateViewHolder(ViewGroup parent, int type) {
 		View v = activity.getLayoutInflater().inflate(R.layout.station_row, parent, false);
-		return new ViewHolder(v) {
-		};
+		return new StationViewHolder(v, glide, openDetailListener);
 	}
 
 	public ArrayList<Station> getList() {
