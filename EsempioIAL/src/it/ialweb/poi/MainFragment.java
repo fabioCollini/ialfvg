@@ -4,13 +4,19 @@ import it.ialweb.poi.DownloaderFragment.DownloadListener;
 
 import java.util.ArrayList;
 
+import android.annotation.TargetApi;
+import android.content.Intent;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.support.v7.widget.RecyclerView.State;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,8 +31,6 @@ public class MainFragment extends Fragment {
 	private DownloaderFragment fragment;
 
 	private StationsAdapter adapter;
-
-	private OpenDetailListener openDetailListener;
 
 	private DownloadListener listener = new DownloadListener() {
 
@@ -50,6 +54,9 @@ public class MainFragment extends Fragment {
 		loadingLayout = view.findViewById(R.id.loading_layout);
 		recycler = (RecyclerView) view.findViewById(R.id.recycler);
 
+		final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+
 		view.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -57,7 +64,7 @@ public class MainFragment extends Fragment {
 			}
 		});
 
-		fragment = DownloaderFragment.getOrCreateFragment(getChildFragmentManager(), "stationLoader");
+		fragment = DownloaderFragment.getOrCreateFragment(getFragmentManager(), "stationLoader");
 
 		if (fragment.isTaskRunning()) {
 			fragment.attach(listener);
@@ -104,8 +111,26 @@ public class MainFragment extends Fragment {
 				outRect.top = 5;
 			}
 		});
-		adapter = new StationsAdapter(getActivity(), list, openDetailListener);
+		adapter = new StationsAdapter(getActivity(), list, new OpenDetailListener() {
+			@Override
+			public void openDetail(Station station, View image) {
+				Intent intent = new Intent(getActivity(), DetailActivity.class);
+				intent.putExtra(DetailFragment.STATION, station);
+
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					openUsingAnimation(image, intent);
+				} else {
+					startActivity(intent);
+				}
+			}
+		});
 		recycler.setAdapter(adapter);
+	}
+
+	@TargetApi(Build.VERSION_CODES.LOLLIPOP)
+	private void openUsingAnimation(View image, Intent intent) {
+		ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(getActivity(), image, "map");
+		getActivity().startActivity(intent, options.toBundle());
 	}
 
 	@Override
@@ -114,9 +139,5 @@ public class MainFragment extends Fragment {
 		if (!getActivity().isChangingConfigurations()) {
 			fragment.stopTask();
 		}
-	}
-
-	public void setOpenDetailListener(OpenDetailListener openDetailListener) {
-		this.openDetailListener = openDetailListener;
 	}
 }

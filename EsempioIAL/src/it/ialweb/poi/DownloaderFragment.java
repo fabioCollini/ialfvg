@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.http.Header;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -19,8 +20,14 @@ public class DownloaderFragment extends Fragment {
 
 	private boolean isRunning;
 
-	public DownloaderFragment() {
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
+	}
+
+	public DownloaderFragment() {
+		System.out.print(123);
 	}
 
 	public static DownloaderFragment getOrCreateFragment(FragmentManager fragmentManager, String tag) {
