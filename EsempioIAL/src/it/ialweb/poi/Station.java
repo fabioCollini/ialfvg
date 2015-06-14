@@ -57,7 +57,7 @@ public class Station implements Parcelable {
 	};
 
 	public String getImageUrl() {
-		return "https://maps.googleapis.com/maps/api/staticmap?zoom=15&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"
+		return "https://maps.googleapis.com/maps/api/staticmap?zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C"
 				+ getLat() + "," + getLon();
 	}
 }

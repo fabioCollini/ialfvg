@@ -21,10 +21,11 @@ public class StationViewHolder extends ViewHolder {
 		this.glide = glide;
 		textView = (TextView) itemView.findViewById(R.id.text);
 		image = (ImageView) itemView.findViewById(R.id.map);
+		final View mapLayout = itemView.findViewById(R.id.map_layout);
 		itemView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				openDetailListener.openDetail(station);
+				openDetailListener.openDetail(station, mapLayout);
 			}
 		});
 	}

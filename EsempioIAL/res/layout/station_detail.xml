@@ -4,11 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageView
-        android:id="@+id/map"
+    <FrameLayout
+        android:id="@+id/map_layout"
         android:layout_width="match_parent"
         android:layout_height="180dp"
-        android:scaleType="centerCrop" />
+        android:transitionName="map" >
+
+        <ImageView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/map_gradient" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/text"
