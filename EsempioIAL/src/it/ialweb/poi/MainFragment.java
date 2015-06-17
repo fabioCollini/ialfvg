@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.support.v7.widget.RecyclerView.State;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 public class MainFragment extends Fragment {
@@ -79,6 +81,16 @@ public class MainFragment extends Fragment {
 			} else {
 				loadData();
 			}
+		}
+
+		ViewGroup texts = (ViewGroup) view.findViewById(R.id.texts);
+		for (int i = 0; i < texts.getChildCount(); i++) {
+			texts.getChildAt(i).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Snackbar.make(v, "Hello!", Snackbar.LENGTH_LONG).show();
+				}
+			});
 		}
 
 		return view;

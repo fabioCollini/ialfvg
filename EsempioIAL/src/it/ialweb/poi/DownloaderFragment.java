@@ -26,10 +26,6 @@ public class DownloaderFragment extends Fragment {
 		setRetainInstance(true);
 	}
 
-	public DownloaderFragment() {
-		System.out.print(123);
-	}
-
 	public static DownloaderFragment getOrCreateFragment(FragmentManager fragmentManager, String tag) {
 		DownloaderFragment fragment = (DownloaderFragment) fragmentManager.findFragmentByTag(tag);
 		if (fragment == null) {

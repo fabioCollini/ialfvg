@@ -7,9 +7,9 @@
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:clipToPadding="false"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        android:paddingTop="?attr/actionBarSize" />
 
     <LinearLayout
         android:id="@+id/loading_layout"
@@ -48,6 +48,92 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/retry" />
+
+        <LinearLayout
+            android:id="@+id/texts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/normal_image"
+                android:paddingBottom="26dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:text="Abc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/normal_image"
+                android:paddingBottom="26dp"
+                android:paddingLeft="26dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                android:text="Abcdefghi" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/nine_patch"
+                android:text="Abc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/nine_patch"
+                android:text="Abcdefghi" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_2"
+                android:padding="12dp"
+                android:text="Abc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape"
+                android:padding="12dp"
+                android:text="Abcdefghi" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/state_list"
+                android:padding="12dp"
+                android:text="Abc" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/state_list"
+                android:padding="12dp"
+                android:text="Abcdefghi" />
+            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/shape_2"
+                android:textColor="@color/button_text_color"
+                android:padding="12dp"
+                android:text="Abcdefghi" />
+
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/state_list_2" />
+        </LinearLayout>
     </LinearLayout>
 
     <android.support.design.widget.AppBarLayout
