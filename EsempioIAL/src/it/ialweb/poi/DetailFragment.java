@@ -18,28 +18,50 @@ import com.joanzapata.android.iconify.Iconify.IconValue;
 
 public class DetailFragment extends Fragment {
 	public static final String STATION = "station";
+	private CollapsingToolbarLayout collapsingToolbar;
+	private ImageView image;
+	private View text;
+	private View gallery;
+	private FloatingActionButton fabButton;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.station_detail, container, false);
-		ImageView image = (ImageView) view.findViewById(R.id.map);
+		View view = inflater.inflate(R.layout.station_detail_fragment, container, false);
+		image = (ImageView) view.findViewById(R.id.map);
+		text = view.findViewById(R.id.detail_text);
+		gallery = view.findViewById(R.id.detail_gallery);
 
-		FloatingActionButton fabButton = (FloatingActionButton) view.findViewById(R.id.fab_button);
+		fabButton = (FloatingActionButton) view.findViewById(R.id.fab_button);
 		fabButton.setImageDrawable(new IconDrawable(getActivity(), IconValue.fa_share_alt));
+		fabButton.setVisibility(View.INVISIBLE);
 
 		AppCompatActivity activity = (AppCompatActivity) getActivity();
 		Station station = activity.getIntent().getParcelableExtra(STATION);
 
 		final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-		activity.setSupportActionBar(toolbar);
-		activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		if (toolbar != null) {
+			activity.setSupportActionBar(toolbar);
+			activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) view
-				.findViewById(R.id.collapsing_toolbar);
-		collapsingToolbar.setTitle(station.getName());
+			collapsingToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
+		}
 
-		Glide.with(activity).load(station.getImageUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
+		if (station != null) {
+			populate(station);
+		}
 
 		return view;
+	}
+
+	public void populate(Station station) {
+		if (collapsingToolbar != null) {
+			collapsingToolbar.setTitle(station.getName());
+		}
+
+		text.setVisibility(View.VISIBLE);
+		gallery.setVisibility(View.VISIBLE);
+		fabButton.setVisibility(View.VISIBLE);
+
+		Glide.with(getActivity()).load(station.getImageUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
 	}
 }

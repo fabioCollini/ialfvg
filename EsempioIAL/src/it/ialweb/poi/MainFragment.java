@@ -50,14 +50,16 @@ public class MainFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.station_list, container, false);
+		View view = inflater.inflate(R.layout.station_list_fragment, container, false);
 
 		errorLayout = view.findViewById(R.id.error_layout);
 		loadingLayout = view.findViewById(R.id.loading_layout);
 		recycler = (RecyclerView) view.findViewById(R.id.recycler);
 
-		final Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-		((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+		Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+		if (toolbar != null) {
+			((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+		}
 
 		view.findViewById(R.id.retry).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -99,7 +101,9 @@ public class MainFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putParcelableArrayList("stations", adapter.getList());
+		if (adapter != null) {
+			outState.putParcelableArrayList("stations", adapter.getList());
+		}
 	}
 
 	private void loadData() {
@@ -126,13 +130,19 @@ public class MainFragment extends Fragment {
 		adapter = new StationsAdapter(getActivity(), list, new OpenDetailListener() {
 			@Override
 			public void openDetail(Station station, View image) {
-				Intent intent = new Intent(getActivity(), DetailActivity.class);
-				intent.putExtra(DetailFragment.STATION, station);
-
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					openUsingAnimation(image, intent);
+				DetailFragment detailFragment = (DetailFragment) getActivity().getSupportFragmentManager()
+						.findFragmentById(R.id.detail_fragment);
+				if (detailFragment != null) {
+					detailFragment.populate(station);
 				} else {
-					startActivity(intent);
+					Intent intent = new Intent(getActivity(), DetailActivity.class);
+					intent.putExtra(DetailFragment.STATION, station);
+
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+						openUsingAnimation(image, intent);
+					} else {
+						startActivity(intent);
+					}
 				}
 			}
 		});
