@@ -7,7 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:clipToPadding="false" />
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/list_padding_top" />
 
     <LinearLayout
         android:id="@+id/loading_layout"

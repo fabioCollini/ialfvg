@@ -23,6 +23,7 @@ public class DetailFragment extends Fragment {
 	private View text;
 	private View gallery;
 	private FloatingActionButton fabButton;
+	private Station station;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class DetailFragment extends Fragment {
 	}
 
 	public void populate(Station station) {
+		this.station = station;
 		if (collapsingToolbar != null) {
 			collapsingToolbar.setTitle(station.getName());
 		}
@@ -63,5 +65,13 @@ public class DetailFragment extends Fragment {
 		fabButton.setVisibility(View.VISIBLE);
 
 		Glide.with(getActivity()).load(station.getImageUrl()).diskCacheStrategy(DiskCacheStrategy.ALL).into(image);
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (station != null) {
+			outState.putParcelable(STATION, station);
+		}
 	}
 }
